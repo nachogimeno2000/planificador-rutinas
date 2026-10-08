@@ -1,0 +1,13 @@
+{
+  "name": "planificador-rutinas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Biblioteca de ejercicios con GIF y generador de fichas de sesión (Supabase + Vercel).",
+  "type": "module",
+  "scripts": {
+    "dev": "npx --yes serve . -l 3000"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
