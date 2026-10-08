@@ -53,7 +53,7 @@ function render(f) {
 
   cont.innerHTML = `
     <header class="f-cab">
-      <p class="marca">PLANIFICADOR</p>
+      <p class="marca"><span class="marca-punto" aria-hidden="true"></span>Planificador</p>
       <h1>${esc(f.titulo)}</h1>
       ${f.objetivo ? `<p class="f-objetivo">${esc(f.objetivo)}</p>` : ''}
       <div class="f-meta">${meta.map((m) => `<span class="pill">${esc(m)}</span>`).join('')}</div>
@@ -87,6 +87,6 @@ function render(f) {
 const f = await cargar();
 if (f) render(f);
 else {
-  cont.innerHTML = `<div class="vacio f-vacio"><p class="marca">PLANIFICADOR</p>
+  cont.innerHTML = `<div class="vacio f-vacio"><p class="marca"><span class="marca-punto" aria-hidden="true"></span>Planificador</p>
     <p>Esta ficha no existe o ya no está compartida. Pide un enlace nuevo a quien te la envió.</p></div>`;
 }

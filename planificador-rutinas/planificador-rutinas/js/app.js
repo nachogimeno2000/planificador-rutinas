@@ -73,7 +73,7 @@ function renderAcceso(modo = 'entrar') {
   const entrar = modo === 'entrar';
   vista.innerHTML = `
   <section class="acceso">
-    <p class="marca-grande">PLANIFICADOR</p>
+    <p class="marca-grande"><span class="marca-punto" aria-hidden="true"></span>Planificador</p>
     <p class="acceso-sub">Tu biblioteca de ejercicios y tus sesiones, en un solo sitio.</p>
     <form id="f-acceso" class="acceso-form">
       <label>Correo<input name="email" type="email" autocomplete="email" required></label>
