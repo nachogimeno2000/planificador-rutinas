@@ -5,7 +5,7 @@ export const ZONAS = [
 ];
 
 export const ESTIMULOS = [
-  'Fuerza', 'Hipertrofia', 'Potencia', 'Resistencia', 'Estabilidad', 'Movilidad', 'Cardio',
+  'SLOW', 'FAST', 'HIGH',
 ];
 
 export const PLANOS = ['Sagital', 'Frontal', 'Transversal'];
