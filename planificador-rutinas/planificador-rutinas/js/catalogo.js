@@ -18,7 +18,24 @@ export const IMPACTOS = [
 
 export const MATERIAL = [
   'Peso corporal', 'Mancuerna', 'Barra', 'Kettlebell', 'Polea', 'Máquina',
-  'Banda elástica', 'Fitball', 'TRX', 'Banco', 'Cajón',
+  'Banda elástica', 'Miniband', 'Fitball', 'Medball', 'TRX', 'Banco', 'Cajón',
+  'Versa Pulley', 'Keiser', 'Yoyo',
+];
+
+export const LATERALIDAD = [
+  { v: 'unilateral', t: 'Unilateral' },
+  { v: 'bilateral', t: 'Bilateral' },
+];
+
+// Cómo se llama un grupo de ejercicios enlazados según cuántos lleva.
+export const nombreGrupo = (n) => (n === 2 ? 'Superserie' : n === 3 ? 'Triserie' : n >= 4 ? `Circuito de ${n}` : '');
+
+// Opciones para agrupar al generar.
+export const AGRUPAR = [
+  { v: 1, t: 'Sueltos' },
+  { v: 2, t: 'Superseries' },
+  { v: 3, t: 'Triseries' },
+  { v: 4, t: 'De 4' },
 ];
 
 export const NIVELES = [

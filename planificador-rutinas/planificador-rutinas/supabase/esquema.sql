@@ -164,3 +164,45 @@ insert into public.categorias (nombre, color, orden) values
   ('Calentamiento', '#F59E0B', 1), ('Fuerza', '#EF4444', 2), ('Core', '#8B5CF6', 3),
   ('Pliometría', '#EC4899', 4), ('Velocidad y agilidad', '#06B6D4', 5), ('Resistencia', '#10B981', 6),
   ('Movilidad', '#3B82F6', 7), ('Prevención', '#84CC16', 8), ('Vuelta a la calma', '#64748B', 9);
+
+-- =====================================================================
+-- Actualización 31/10/2026: lateralidad, encuadre, grupos, carpetas, vista TV
+-- =====================================================================
+alter table public.ejercicios
+  add column lateralidad text check (lateralidad in ('unilateral','bilateral')),
+  add column encuadre jsonb;  -- {x,y,w,h} en fracciones 0..1 del vídeo original (recorte cuadrado)
+
+alter table public.sesion_ejercicios add column grupo smallint;  -- mismo número = superserie / triserie
+
+create table public.carpetas (
+  id uuid primary key default gen_random_uuid(),
+  nombre text not null check (length(trim(nombre)) > 0),
+  orden smallint not null default 0,
+  creado_por uuid not null default auth.uid() references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+create index carpetas_creado_por_idx on public.carpetas(creado_por);
+alter table public.carpetas enable row level security;
+create policy "carpetas_propias" on public.carpetas for all to authenticated
+  using (creado_por = (select auth.uid())) with check (creado_por = (select auth.uid()));
+
+alter table public.sesiones
+  add column carpeta_id uuid references public.carpetas(id) on delete set null,
+  add column cabecera jsonb not null default '[]'::jsonb,   -- [{"etiqueta":"Semana","valor":"11"}, ...]
+  add column tv_columnas text[] not null default '{}';
+create index sesiones_carpeta_idx on public.sesiones(carpeta_id);
+
+create or replace function public.comprobar_carpeta()
+returns trigger language plpgsql set search_path = '' as $$
+begin
+  if new.carpeta_id is not null and not exists (
+    select 1 from public.carpetas c where c.id = new.carpeta_id and c.creado_por = new.creado_por) then
+    raise exception 'Carpeta no válida';
+  end if;
+  return new;
+end $$;
+create trigger sesiones_comprobar_carpeta before insert or update of carpeta_id on public.sesiones
+  for each row execute function public.comprobar_carpeta();
+
+-- ficha_publica se amplía con: cabecera, tv_columnas, updated_at, grupo, encuadre y lateralidad
+-- (ver la migración "macro_actualizacion_1" en Supabase para la versión completa).

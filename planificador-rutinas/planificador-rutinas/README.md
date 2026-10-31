@@ -14,23 +14,26 @@ La app es HTML, CSS y JavaScript sin paso de compilación, así que Vercel la si
 
 ## Secciones
 
-- **Sesión**: la consola de la izquierda filtra por zona muscular, estímulo, plano e impacto. *Generar sesión* elige ejercicios al azar entre los que encajan, reparte el número entre las zonas marcadas y propone series, repeticiones y descanso según el estímulo. Cada ejercicio se puede reordenar, cambiar por otro equivalente o quitar.
-- **Biblioteca**: alta y edición de ejercicios con su GIF o vídeo (subido a Supabase o enlazado).
-- **Mis sesiones**: sesiones guardadas, para editarlas o abrir su ficha.
-- **Ficha** (`/f/<código>`): la vista para el deportista. No necesita cuenta y solo se ve si la sesión está compartida.
+- **Sesión**: la consola filtra por zona muscular, estímulo, unilateral/bilateral, material, plano e impacto, y la lista de al lado muestra al momento los ejercicios que encajan (con **+** se añaden). *Generar sesión* elige al azar entre ellos y puede agruparlos en superseries, triseries o bloques de 4. Los ejercicios se enlazan o separan a mano con el botón de cadena, y cada uno admite una nota solo para esa sesión.
+- **Biblioteca**: alta y edición de ejercicios con su vídeo o GIF, su clasificación y el encuadre (qué parte del vídeo se ve en las miniaturas). Pulsando cualquier vídeo se ve entero.
+- **Mis sesiones**: sesiones guardadas, organizadas en carpetas.
+- **Ficha** (`/f/<código>`): la vista para el deportista en el móvil. No necesita cuenta y solo se ve si la sesión está compartida.
+- **Vista TV** (`/tv/<código>`): una pantalla 16:9 (o un A4 apaisado al imprimir) con una fila por superserie/triserie, datos de cabecera y columna de notas. Se actualiza sola cada 30 segundos.
 
 ## Estructura
 
 ```
 index.html          App (acceso, sesión, biblioteca, mis sesiones)
 ficha.html          Ficha pública de una sesión
+tv.html             Vista TV / A4 apaisado
 css/styles.css      Estilos
 js/config.js        URL y clave publicable de Supabase
 js/catalogo.js      Listas de zonas, estímulos, planos, material… (edítalas aquí)
 js/app.js           Lógica de la app
 js/ficha.js         Lógica de la ficha pública
+js/tv.js            Lógica de la vista TV
 supabase/esquema.sql  Tablas, seguridad y almacenamiento (ya aplicado)
-vercel.json         Redirección de /f/<código> a la ficha
+vercel.json         Redirecciones de /f/<código> y /tv/<código>
 ```
 
 ## Requisitos
